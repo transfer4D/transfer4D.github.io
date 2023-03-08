@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Transfer4D: A framework for frugal motion capture and deformation transfer">
+  <meta name="keywords" content="Deformation Transfer, NRR, Skeletonization">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Transfer4D: A framework for frugal motion capture and deformation transfer</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<!--   <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script> -->
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.ico">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Transfer4D: A framework for frugal motion capture and deformation transfer</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://shubhmaheshwari.github.io/website/">Shubh Maheshwari</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://www.cse.iitd.ac.in/~narain/">Rahul Narain</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://www.linkedin.com/in/ramya-hebbalaguppe-620b272">Ramya Hebbalaguppe</a><sup>1</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>TCS Research, India,</span>
+            <span class="author-block"><sup>2</sup>Indian Institute of Technology Delhi, India</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="#" onclick="alert('Coming soon')" 
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="#" onclick="alert('Coming soon')" 
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Video Link. -->
+              <span class="link-block">
+                <a href="#" onclick="alert('Coming soon')" 
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="#" onclick="alert('Coming soon')" 
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <!-- Dataset Link. -->
+              <span class="link-block">
+                <a href="#" onclick="alert('Coming soon')" 
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="far fa-images"></i>
+                  </span>
+                  <span>Data</span>
+                  </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <video id="teaser" autoplay muted loop playsinline height="100%">
+        <source src="./static/videos/teaser.mp4"
+                type="video/mp4">
+      </video>
+      <h2 class="subtitle has-text-centered">
+        Transfer4D transfers motion from a commodity depth sensor to a virtual model.
+      </h2>
+    </div>
+  </div>
+</section>
+
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item item-teaser">
+          <video poster="" id="teaser" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/Demo-teaser.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-bipeds">
+          <video poster="" id="bipeds" autoplay controls muted loop playsinline>
+            <source src="./static/videos/Demo-bipeds.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-quadrapeds">
+          <video poster="" id="quadrapeds" autoplay controls muted loop playsinline height="100%">
+            <source src="./static/videos/Demo-quadrapeds.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-doll">
+          <video poster="" id="doll" autoplay controls muted loop playsinline height="100%" width="50%">
+            <source src="./static/videos/Demo-Donkey-Doll.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <!-- Paper video. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Summary</h2>
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/MrKrnHhk8IA?rel=0&amp;showinfo=0"
+                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+    <!--/ Paper video. -->
+
+
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <div class="content has-text-justified">
+          <p>
+            Animating a virtual character based on a real performance of an actor is a challenging task that currently requires expensive motion capture setups and additional effort by expert animators, rendering it accessible only to large production houses. The goal of our work is to democratize this task by developing a frugal alternative termed <b>Transfer4D</b> that uses only commodity depth sensors and further reduces animators' effort by automating the rigging and animation transfer process. 
+          </p>
+          <p>
+            Our approach can transfer motion from an incomplete, single-view depth video to a semantically similar target mesh, unlike prior works that make a stricter assumption on the source to be noise-free and watertight. 
+          </p>
+          <ul>
+            <li>
+              We use non-rigid reconstruction to track motion from the depth sequence, and then we rig the source object using skinning decomposition. Finally, the rig is embedded into the target object for motion retargeting.
+            </li>
+            <li>
+              To handle sparse, incomplete videos from depth video inputs and variations between source and target objects, we propose to use skeletons as an intermediary representation between motion capture and transfer. 
+            </li>
+            <li>
+              We propose a novel unsupervised skeleton extraction pipeline from single-view depth sequence that incorporates additional geometric information, resulting in superior performance in motion reconstruction and transfer in comparison to the contemporary methods and making our approach generic. 
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+  </div>
+</section>
+
+
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <!-- Animation. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3"> How it works </h2>
+
+        <video id="pipeline" autoplay controls muted loop playsinline height="100%">
+          <source src="./static/videos/Method-Overview.mp4"
+                  type="video/mp4">
+        </video>
+
+      </div>
+    </div>
+    <!--/ Animation. -->
+    </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop has-text-centered">
+    <h2 class="title is-3"> Skeletonization </h2>
+
+    <div class="columns is-centered has-text-centered">
+      
+      <!-- Curve Skeleton. -->
+      <div class="column">
+        <div class="content">
+          <h2 class="title is-3">Curve skeleton</h2>
+           <img src="./static/images/curve_skeleton.jpeg"
+                 class="interpolation-image"
+                 alt="Extracted Curve Skeleton"/>
+          <p>
+            (i) Notice that the extracted joint position from Local separators lies on the surface of the incomplete mesh. Our optimization aligns the joint position to the medial axis of the object.
+          </p>
+        </div>
+      </div>
+      <!--/ Curve Skeleton. -->
+
+      <!-- Matting. -->
+      <div class="column">
+        <h2 class="title is-3">Motion Skeleton</h2>
+        <div class="columns is-centered">
+          <div class="column content">
+            <img src="./static/images/motion_skeleton.jpeg"
+                 class="interpolation-image"
+                 alt="Interpolation end reference image."/>
+            <p>
+              (ii) To incorporate the motion information, each curve of the extracted curve skeleton is split into multiple bones
+            </p>
+          </div>
+        </div>
+      </div>
+      <!-- Matting. -->
+
+    </div>
+
+    <div class="is-full-width">
+          <p>
+            Our proposed skeletonization method, (a) does not require predifined template or markers, (b) works on single-view incomplete mesh sequence, and (c) uses the geometry and motion cues to estimate skeleton motion.
+          </p>
+    </div>
+
+</section>
+
+
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+
+    <div class="columns is-centered">
+      <!-- Animation. -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3 has-text-centered">Comparisions</h2>
+
+        <!-- Static. -->
+        <h3 class="title is-4 has-text-centered">Static Skeleton Comparision</h3>
+        <div class="content has-text-justified">
+          <img src="./static/images/Static-Skeleton-Comparision.png"
+                 class="interpolation-image"
+                 alt="Interpolation end reference image."/>
+
+          <p>
+            Static skeletonisation methods do not incorporate motion information and produce temporally incoherent skeletons
+          </p>
+        </div>
+        <br/>
+        <!--/ Static. -->
+
+        <!-- Motion Skeleton. -->
+        <h3 class="title is-4 has-text-centered">Skeleton embedding Comparision (Same object)</h3>
+        <div class="content has-text-justified">
+          <img src="./static/images/Motion-Skeleton-Comparision.jpeg"
+                 class="interpolation-image"
+                 alt="Interpolation end reference image."/>
+          <p>
+             Compared to motion skeleton extracted from other methods, by incorporating structural cues, ours is more effective at embedding skeleton from incomplete mesh sequence.
+          </p>
+        </div>
+        <!--/ Motion Skeleton. -->
+      
+    </div>
+    <!--/ Matting. -->
+  </div>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{transfer4D,
+  author    = {Maheshwari, Shubh and Narain, Rahul and Hebbalaguppe, Ramya},
+  title     = {Transfer4D: A framework for frugal motion capture and deformation transfer},
+  journal   = {CVPR},
+  year      = {2023},
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="columns is-centered">
+    <div class="column is-8">
+      <div class="content">
+        <p>
+          This website is licensed under a <a rel="license"
+          href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+        Commons Attribution-ShareAlike 4.0 International License</a>.
+      </p>
+      <p>
+        Website source code based on the <a href="https://nerfies.github.io/"> Nerfies</a> project page. If you want to reuse their <a
+        href="https://github.com/nerfies/nerfies.github.io">source code</a>, please credit them appropriately.
+      </p>
+    </div>
+  </div>
+  </div>
+</footer>
+
+</body>
+</html>

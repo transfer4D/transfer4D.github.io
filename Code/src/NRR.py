@@ -19,7 +19,7 @@ from NonRigidICP.model.registration_fusion import Registration as PytorchRegistr
 from lepard.inference import Lepard	
 from warpfield import WarpField # Connects ED Graph and TSDF/Mesh/Whatever needs to be deformed  
 
-from evaluation import CompleteMeshEvaluator
+# from evaluation import CompleteMeshEvaluator
 
 class AnimationTransfer4D:
 	def __init__(self,fopt):

@@ -6,3 +6,5 @@ Code/NonRigidICP/cxx/build/
 Code/NonRigidICP/external/
 
 Code/lepard/cpp_wrappers/
+
+**/__pycache__/

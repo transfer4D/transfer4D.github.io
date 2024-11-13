@@ -22,8 +22,9 @@ class Lepard:
 	def __init__(self, config_filepath):
 		self.config = load_config(config_filepath)
 		self.pipeline = Pipeline(self.config)
-		state = torch.load(os.path.join(os.path.dirname(__file__),self.config.pretrain))
-		self.pipeline.load_state_dict(state['state_dict'])
+		print(f"[Warning]: Not loading lepard from:{os.path.join(os.path.dirname(__file__),self.config.pretrain)}")
+		# state = torch.load(os.path.join(os.path.dirname(__file__),self.config.pretrain))
+		# self.pipeline.load_state_dict(state['state_dict'])
 
 		self.pipeline = self.pipeline.to(self.config.device)
 

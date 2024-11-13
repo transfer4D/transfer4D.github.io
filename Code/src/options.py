@@ -36,18 +36,18 @@ saved_model = os.path.join(experiments_dir, "models", model_name, f"{model_name}
 # #####################################################################################################################
 # # TRAINING OPTIONS
 # #####################################################################################################################
-# mode = "4_your_custom_settings" # ["0_flow", "1_solver", "2_mask", "3_refine"]
+mode = "4_your_custom_settings" # ["0_flow", "1_solver", "2_mask", "3_refine"]
 
-# if mode == "0_flow":
-#     from settings.settings_flow import *
-# elif mode == "1_solver":
-#     from settings.settings_solver import *
-# elif mode == "2_mask":
-#     from settings.settings_mask import *
-# elif mode == "3_refine":
-#     from settings.settings_refine import *
-# elif mode == "4_your_custom_settings":
-#     from settings.custom_settings import *
+if mode == "0_flow":
+    from settings.settings_flow import *
+elif mode == "1_solver":
+    from settings.settings_solver import *
+elif mode == "2_mask":
+    from settings.settings_mask import *
+elif mode == "3_refine":
+    from settings.settings_refine import *
+elif mode == "4_your_custom_settings":
+    from settings.custom_settings import *
 
 #####################################################################################################################
 # Print options

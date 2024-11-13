@@ -1,2 +1,8 @@
 .DS_store
 .idea
+
+
+Code/NonRigidICP/cxx/build/
+Code/NonRigidICP/external/
+
+Code/lepard/cpp_wrappers/

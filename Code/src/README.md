@@ -31,7 +31,7 @@ To run on the custom depth videos: Create a folder for the source object in the 
 (a) depth: folder containing depth images as 00%d.png; (b) intrinsics.txt: 3x3 camera intrinsic matrix 
 
 
-### Installation instructions: 
+### NRR Installation: 
 1. Compile lepard and NonRigidICP 
 ```
 	cd Code/lepard/cpp_wrappers
@@ -40,3 +40,9 @@ To run on the custom depth videos: Create a folder for the source object in the 
 	cd Code/NonRigidICP/cxx 
 	export MAX_JOBS=1; python setup.py install
 ```
+
+### SSDR Installation
+1. Clone [dem-bones](https://github.com/electronicarts/dem-bones). 
+2. Replace `mainCmd.cpp` with `Code/src/dem-bones/mainCmd.cpp`
+3. Replace `include/DemBones.h` with `Code/src/dem-bones/DemBones.h`
+4. Copy `Code/src/dem-bones/NumpyReader.{h,cpp}`  into  their `src/`  

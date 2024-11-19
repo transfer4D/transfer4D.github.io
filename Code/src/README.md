@@ -43,6 +43,7 @@ To run on the custom depth videos: Create a folder for the source object in the 
 
 ### SSDR Installation
 1. Clone [dem-bones](https://github.com/electronicarts/dem-bones). 
+2. Replace `CMakeLists.txt` with `Code/src/dem-bones/CMakeLists.txt`
 2. Replace `mainCmd.cpp` with `Code/src/dem-bones/mainCmd.cpp`
 3. Replace `include/DemBones.h` with `Code/src/dem-bones/DemBones.h`
 4. Copy `Code/src/dem-bones/NumpyReader.{h,cpp}`  into  their `src/`  

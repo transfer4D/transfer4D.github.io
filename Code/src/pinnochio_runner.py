@@ -19,7 +19,7 @@ sys.path.append("../")  # Making it easier to load modules
 
 class SkeletonEmbedding: 
 	def __init__(self,opt,vis):
-		self.pinoccio_path = "<Code-Path>/Pinocchio/DemoUI/DemoUI"
+		self.pinoccio_path = "/home/lucy/ssd/Codes/transfer4D/Code/src/Pinocchio/DemoUI/DemoUI"
 
 		self.opt = opt
 		self.vis = vis
@@ -85,7 +85,7 @@ class SkeletonEmbedding:
 			verts,faces = load_anime_file(mesh_path)
 			verts = verts[self.opt.anime_index]
 
-		elif ext in ['obj','off','ply']:
+		elif ext in ['obj','off','ply',"OFF"]:
 			# mesh = o3d.io.read_triangle_mesh(mesh_path)
 			tmesh = trimesh.load_mesh(mesh_path,process=False)
 			verts = np.asarray(tmesh.vertices)
@@ -184,7 +184,7 @@ class SkeletonEmbedding:
 
 
 		# Read mesh 
-		mesh_path = os.path.join(target_path,f'{source_frame_id}_final_vertices.obj')
+		mesh_path = os.path.join(target_path,f'{source_frame_id}_mesh.obj')
 		verts,faces = self.load_mesh(mesh_path,align_to_depth_map=False)
 
 		# Get Target skel file 
@@ -249,7 +249,7 @@ class SkeletonEmbedding:
 		
 
 
-		# self.vis.plot_retarget_motion(source_frame_id,mesh_motion,faces,trajectory,target_skeleton_motion,skeleton_motion,parent_array,target_attachment,boneVis=boneVis,boneDists=boneDists,proj=projected_Location)
+		self.vis.plot_retarget_motion(source_frame_id,mesh_motion,faces,trajectory,target_skeleton_motion,skeleton_motion,parent_array,target_attachment,boneVis=boneVis,boneDists=boneDists,proj=projected_Location)
 
 		return mesh_motion,faces,target_skeleton_motion 
 
@@ -323,7 +323,7 @@ class SkeletonEmbedding:
 						print(output.strip())
 
 
-				self.optimised_skeleton = self.read_skel('./skeleton.out')
+				self.optimised_skeleton = self.read_skel('./skeleton.out') # skeleton_out
 				if len(self.optimised_skeleton[0]) == prev_num_joints:
 					break
 				else: 
@@ -381,9 +381,43 @@ class SkeletonEmbedding:
 				# Perform motion retargetting 
 				retargeted_motion,faces,target_skeleton_motion = self.get_retargeted_motion(source_frame_id,data_path,target_path)
 
-				np.save(os.path.join(target_path,f"{source_frame_id}_retargeted_motion.npy"),retargeted_motion)
-				np.save(os.path.join(target_path,f"{source_frame_id}_retargeted_skeleton_motion.npy"),target_skeleton_motion)
+				mesh_motion_path = os.path.join(target_path,f"{source_frame_id}_retargeted_motion.npy")
+				target_skeleton_motion_path = os.path.join(target_path,f"{source_frame_id}_retargeted_skeleton_motion.npy")
+				rendered_retargeted_video_path = os.path.join(target_path,f"{source_frame_id}_retargeted_video.mp4")
+
+				np.save(mesh_motion_path,retargeted_motion)
+				np.save(target_skeleton_motion_path ,target_skeleton_motion)
+
 				# Plot and show output 
+				import matplotlib.pyplot as plt
+				from matplotlib.animation import FFMpegWriter
+				def render_mesh_video(npy_file_path, output_video_path, fps=30):
+					data = np.load(npy_file_path)  # Shape: (Frames, N, 3)
+					frames, num_points, _ = data.shape
+
+					dpi = 100
+					fig = plt.figure(figsize=(8, 8), dpi=dpi)
+					ax = fig.add_subplot(111, projection='3d')
+					metadata = {'title': 'Mesh Trajectory', 'artist': 'Matplotlib'}
+					writer = FFMpegWriter(fps=fps, metadata=metadata)
+
+					with writer.saving(fig, output_video_path, dpi):
+						for frame_idx in range(frames):
+							ax.clear()
+							ax.scatter(data[frame_idx, :, 0], data[frame_idx, :, 1], data[frame_idx, :, 2], c='b', marker='o')
+							ax.set_xlim(np.min(data[:, :, 0]), np.max(data[:, :, 0]))
+							ax.set_ylim(np.min(data[:, :, 1]), np.max(data[:, :, 1]))
+							ax.set_zlim(np.min(data[:, :, 2]), np.max(data[:, :, 2]))
+							ax.set_xlabel("X Axis")
+							ax.set_ylabel("Y Axis")
+							ax.set_zlabel("Z Axis")
+							ax.set_title(f"Frame {frame_idx + 1}/{frames}")
+							writer.grab_frame()
+
+					print(f"Video saved to {output_video_path}")
+					
+				render_mesh_video(mesh_motion_path,rendered_retargeted_video_path)
+
 
 
 

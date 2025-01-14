@@ -13,9 +13,12 @@ import numpy as np
 from vis import get_visualizer # Visualizer 
 from frame_loader import RGBDVideoLoader
 from embedded_deformation_graph import EDGraph # Create ED graph from mesh, depth image, tsdf 
-from run_lepard import Lepard_runner # SceneFlow module 
+# from run_lepard import Lepard_runner # SceneFlow module 
 # from run_motion_model import MotionCompleteNet_Runner
 from NonRigidICP.model.registration_fusion import Registration as PytorchRegistration
+
+import sys
+sys.path.append('lepard')
 from lepard.inference import Lepard	
 from warpfield import WarpField # Connects ED Graph and TSDF/Mesh/Whatever needs to be deformed  
 
@@ -42,7 +45,7 @@ class AnimationTransfer4D:
 		self.source_frame_data = self.frameLoader.get_source_data(fopt.source_frame) # Source RGBD Image
 		self.target_frame = fopt.source_frame # Set target frame initially to source frame 
 
-		self.lepard = Lepard(os.path.join(os.getcwd(),"../lepard/configs/test/4dmatch.yaml")) # Sceneflow estimator
+		self.lepard = Lepard(os.path.join(os.getcwd(),"lepard/configs/test/4dmatch.yaml")) # Sceneflow estimator
 
 		source_mask = self.source_frame_data["im"][-1] > 0	
 
@@ -219,7 +222,7 @@ class AnimationTransfer4D:
 			self.source_pcd_prev,
 			estimated_transformations["warped_verts"],
 			estimated_transformations["valid_verts"],
-			debug=False)				
+			debug=False)	# TODO Debug = interactive visualizer
 		# Update previous_sceneflow_lengths
 		# self.previous_sceneflow_lengths = np.linalg.norm(self.source_pcd - estimated_transformations['warped_verts'],axis=1)
 

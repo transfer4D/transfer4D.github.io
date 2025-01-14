@@ -6,7 +6,7 @@ import sys
 import time
 import logging
 import argparse
-from fusion_tests import pyssdr
+import pyssdr
 import numpy as np 
 from scipy import sparse
 from sklearn.cluster import KMeans
@@ -19,6 +19,11 @@ from sklearn.neighbors import KDTree
 from utils.viz_utils import transform_pointcloud_to_opengl_coords as reflect_opengl
 from find_connected_components import get_connected_components_from_adj_matrix
 
+
+def write_skel(pinocchio_skel_path,joint_positions,new_parent_array):
+		with open(pinocchio_skel_path,'w') as f:
+			for i,v in enumerate(joint_positions):
+				f.write(f"{i} {v[0]} {v[1]} {v[2]} {new_parent_array[i]}\n")
 
 class SSDR(pyssdr.MyDemBones):
     def __init__(self,opt):
@@ -715,7 +720,7 @@ class SSDR(pyssdr.MyDemBones):
                 np.save(os.path.join(skeleton_path,f"skelAdj_{source_frame_id}.npy"),skel_adj)
                 np.save(os.path.join(skeleton_path,f"labels_{source_frame_id}.npy"),labels)
                 
-                write_skel(os.path.join(skeleton_path,f"{source_frame_id}.skel"),joint_motion[0],parent_array)
+                write_skel(os.path.join(skeleton_path,f"{source_frame_id}.skel"), joint_motion[0],parent_array)
                 np.save(os.path.join(skinning_path,f"weights_{source_frame_id}.npy"),self.w.todense())
                 np.save(os.path.join(skinning_path,f"boneTransformations_{source_frame_id}.npy"),self.m)
 

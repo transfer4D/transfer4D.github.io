@@ -34,11 +34,11 @@ To run on the custom depth videos: Create a folder for the source object in the 
 ### NRR Installation: 
 1. Compile lepard and NonRigidICP 
 ```
-	cd Code/lepard/cpp_wrappers 
-	source ./conpile_wrappers.sh
+cd Code/lepard/cpp_wrappers 
+source ./compile_wrappers.sh
 
-	cd Code/NonRigidICP/cxx 
-	export MAX_JOBS=1; python setup.py install
+cd Code/NonRigidICP/cxx 
+export MAX_JOBS=1; python setup.py install
 ```
 
 ### PYSSDR installation
@@ -51,4 +51,13 @@ cd pyssdr
 mkdir build && cd build
 cmake .. -DCMAKE_INSTALL_PREFIX=$(python3 -m site --user-base)
 make install
+```
+
+### Pinocchio installation
+The code of Pinocchio is from [online implementation of Pinnochio](https://github.com/pmolodo/Pinocchio)
+I've updated some of the header codes to be compatible with G++ version 9.5.0, since older version of G++ compiler is not available for Ubuntu 22.04 LTS.
+For those who has lower version of compiler and wants original implementation of Pinocchio, you can pull from the original repo and use it instead.
+```
+cd Pinocchio
+make
 ```

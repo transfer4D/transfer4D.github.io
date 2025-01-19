@@ -139,7 +139,7 @@ class EDGraph:
         compute_mesh_from_depth_c(
         point_image,
         self.graph_generation_parameters["max_triangle_distance"],
-        vertices, vertex_pixels, faces)
+        vertices, faces)
         
         num_vertices = vertices.shape[0]
         num_faces = faces.shape[0]

@@ -13,7 +13,7 @@ class VisualizerPlotly(Visualizer):
 	def __init__(self,opt):
 		super().__init__(opt)	
 
-		self.nrrAblationFile = '<Code-Path>/evaluationScores/NRR-Ablations.csv'
+		self.nrrAblationFile = '/home/lucy/ssd/Codes/transfer4D/Code/src/evaluationScores/NRR-Ablations.csv'
 		if os.path.isfile(self.nrrAblationFile):
 			self.nrrAblation_pd = pd.read_csv(self.nrrAblationFile)
 
@@ -88,6 +88,7 @@ class VisualizerPlotly(Visualizer):
 		for term_type in plotting_variable_dict:
 			fig = make_subplots(rows=1, cols=1, subplot_titles=[f"Loss terms for {term_type} across timesteps for:{sample_name}"])
 			
+			data_to_append = []
 			for exp_name in exp_data:	
 				for term in plotting_variable_dict[term_type]:					
 					if term == 'target_id':
@@ -101,8 +102,9 @@ class VisualizerPlotly(Visualizer):
 
 
 
-				score_filename = f'<Code-Path>/evaluationScores/{exp_name}.csv'
-
+				score_filename = f'/home/lucy/ssd/Codes/transfer4D/Code/src/evaluationScores/{exp_name}.csv'
+				os.makedirs(os.path.dirname(score_filename),exist_ok=True)
+					
 				if os.path.isfile(score_filename):
 					self.pose_ev_pd = pd.read_csv(score_filename)
 				else:
@@ -111,9 +113,9 @@ class VisualizerPlotly(Visualizer):
 				if sample_name not in self.pose_ev_pd.values:
 					data = dict([ (term,np.mean(exp_data[exp_name][term])) for term in ['depth','silh','point_to_plane'] if term in exp_data[exp_name] ])
 					data['Sample'] = sample_name
-					self.pose_ev_pd = self.pose_ev_pd.append(data,ignore_index=True)
+					data_to_append.append(pd.DataFrame([data]))
 				self.pose_ev_pd.to_csv(score_filename,index=False)	
-			
+			self.pose_ev_pd = pd.concat([self.pose_ev_pd] + data_to_append, ignore_index=True)
 
 				
 

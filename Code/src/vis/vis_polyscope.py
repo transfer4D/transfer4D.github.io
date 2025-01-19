@@ -211,7 +211,7 @@ class VisualizerPolyScope(Visualizer):
 		ps_source_pcd.remove()
 		ps_target_pcd.remove()
 
-	def plot_sceneflow_calibration(self,source_pcd,target_pcd,target_matches,returned_points,source_pcd_prev,nrr_output,valid_verts,debug=False):
+	def plot_sceneflow_calibration(self,source_pcd,target_pcd,target_matches,returned_points,source_pcd_prev,nrr_output,valid_verts, debug=False):
 
 		if self.opt.usePreviousFrame:
 			source_pcd = viz_utils.transform_pointcloud_to_opengl_coords(source_pcd_prev)
@@ -242,7 +242,7 @@ class VisualizerPolyScope(Visualizer):
 		ps_source_pcd = ps.register_point_cloud("source_pcd", source_pcd, enabled=True,radius=0.005)		
 		ps_target_pcd = ps.register_point_cloud("target_pcd", target_pcd, enabled=True,radius=0.005)
 		ps_target_matches = ps.register_point_cloud("target_matches", target_matches, enabled=True,radius=0.005)
-		ps_returned_points = ps.register_point_cloud("returned_points", returned_points, enabled=False,radius=0.005)
+		ps_returned_points = ps.register_point_cloud("returned_points", returned_points, enabled=True,radius=0.005)
 		ps_nrr_output = ps.register_point_cloud("nrr_output", nrr_output, enabled=True,radius=0.005)
 
 		valid_color = self.get_viridis_color(valid_verts)
@@ -255,10 +255,10 @@ class VisualizerPolyScope(Visualizer):
 
 		if debug:
 			ps.show()
-
+			
 		print(f"Saving plot to :{image_path}")	
 		ps.set_screenshot_extension(".jpg");
-		ps.screenshot(image_path,transparent_bg=False)
+		ps.screenshot(image_path, transparent_bg=False)
 
 		ps_source_pcd.remove()
 		ps_target_pcd.remove()
@@ -633,7 +633,6 @@ class VisualizerPolyScope(Visualizer):
 		self.update_pcd(source_pcd,source_confidence,lepard_sceneflow,warped_verts,target_pcd)	
 		# self.update_mesh()
 		self.update_graph(estimated_transformations['graph_error'],estimated_transformations["graph_sdf_alignment"])	
-
 
 
 		ps.look_at(np.array([0,0,6*self.bbox[2]]) + self.object_position,self.object_position + np.array([0,0,0])) # For human cam1

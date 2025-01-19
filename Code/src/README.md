@@ -34,16 +34,30 @@ To run on the custom depth videos: Create a folder for the source object in the 
 ### NRR Installation: 
 1. Compile lepard and NonRigidICP 
 ```
-	cd Code/lepard/cpp_wrappers
-	source ./conpile_wrappers.sh
+cd Code/lepard/cpp_wrappers 
+source ./compile_wrappers.sh
 
-	cd Code/NonRigidICP/cxx 
-	export MAX_JOBS=1; python setup.py install
+cd Code/NonRigidICP/cxx 
+export MAX_JOBS=1; python setup.py install
 ```
 
-### SSDR Installation
-1. Clone [dem-bones](https://github.com/electronicarts/dem-bones). 
-2. Replace `CMakeLists.txt` with `Code/src/dem-bones/CMakeLists.txt`
-2. Replace `mainCmd.cpp` with `Code/src/dem-bones/mainCmd.cpp`
-3. Replace `include/DemBones.h` with `Code/src/dem-bones/DemBones.h`
-4. Copy `Code/src/dem-bones/NumpyReader.{h,cpp}`  into  their `src/`  
+### PYSSDR installation
+```
+git clone https://github.com/shubhMaheshwari/pyssdr.git --recursive
+cd pyssdr
+
+# download & place the FBXSDX under ExtLibs/
+
+mkdir build && cd build
+cmake .. -DCMAKE_INSTALL_PREFIX=$(python3 -m site --user-base)
+make install
+```
+
+### Pinocchio installation
+The code of Pinocchio is from [online implementation of Pinnochio](https://github.com/pmolodo/Pinocchio)
+I've updated some of the header codes to be compatible with G++ version 9.5.0, since older version of G++ compiler is not available for Ubuntu 22.04 LTS.
+For those who has lower version of compiler and wants original implementation of Pinocchio, you can pull from the original repo and use it instead.
+```
+cd Pinocchio
+make
+```

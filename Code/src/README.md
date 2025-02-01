@@ -20,10 +20,18 @@ Note:- For each external requirement, if the folder is already present, replace 
 ### Run
 Our method requires 4 steps:  
 ```
-python NRR.py --datadir <path-to-data> --exp <exp-name> --ablation <ablation-name> 						// Non Rigid Registration 
-python run_pygel.py --datadir <path-to-data> --exp <exp-name> --ablation <ablation-name> 				// Curve Skeleton Extraction 
-python detailed_clustering_ssdr.py --datadir <path-to-data> --exp <exp-name> --ablation <ablation-name> // Motion Skeleton Extraction
-python pinnochio_runner.py --datadir <path-to-data>  --mesh <path-to-target-mesh> --exp <exp-name> --ablation <ablation-name> // Skeleton Embedding
+// Non Rigid Registration 
+python NRR.py --datadir <path-to-data> --exp <exp-name> --ablation <ablation-name> 
+
+// Curve Skeleton Extraction 
+python run_pygel.py --datadir <path-to-data> --exp <exp-name> --ablation <ablation-name> 
+
+// Motion Skeleton Extraction
+python detailed_clustering_ssdr.py --datadir <path-to-data> --exp <exp-name> --ablation <ablation-name>
+
+// Skeleton Embedding
+python pinnochio_runner.py --datadir <path-to-data>  --mesh <path-to-target-mesh> --exp <exp-name> --ablation <ablation-name> 
+
 ```
 
 ### Datadir Creation 

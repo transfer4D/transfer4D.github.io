@@ -343,8 +343,8 @@ def chamfer_dist(src_pcd,tgt_pcd,samples=5000):
     corresp = corresp[0]
     valid_source_points = valid_source_points[0]
 
-    corresp = torch.cat([src[:samples][:,None],tgt[:samples][corresp.cpu()][:,None]],axis=-1)
-    corresp = corresp[valid_source_points.cpu()]
+    corresp = torch.cat([src[:samples][:,None],tgt[:samples][corresp][:,None]],axis=-1)
+    corresp = corresp[valid_source_points]
 
     return cham_dist,corresp
 

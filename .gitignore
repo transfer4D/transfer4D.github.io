@@ -8,3 +8,5 @@ Code/NonRigidICP/external/
 Code/lepard/cpp_wrappers/
 
 **/__pycache__/
+
+dataset/

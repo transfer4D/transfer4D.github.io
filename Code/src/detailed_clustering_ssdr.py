@@ -460,7 +460,7 @@ class SSDR(pyssdr.MyDemBones):
         return joint_trajectory    
 
     @staticmethod    
-    def remove_redundant_joints(joint_motion,skel_adj,label_to_joint_mapping):
+    def remove_redundant_joints(joint_motion, skel_adj, label_to_joint_mapping):
         joint_degree = np.sum(skel_adj,axis=0).astype(np.int32)
         keep_joints = [i for i,x in enumerate(joint_degree) if x > 0]
 
@@ -840,7 +840,8 @@ if __name__ == "__main__":
 
     # Clusters 
 
-    args.add_argument('--min_reconstruction_change_percentage', default=0.0, type=int, help='minimum change in reconstruction error required for each split')
+    args.add_argument('--min_reconstruction_change_percentage', default=0.0, type=int, 
+                      help='minimum change in reconstruction error required for each split')
 
 
     # Arguments for debugging  

@@ -1,18 +1,19 @@
-iters: 200
+iters: 00
 gpu_mode: True
 lr: 0.06
 gamma: 0.999
 deformation_model: ED
 w_silh: 000.0
 w_ldmk: 1
-w_arap: 20 # 10
+w_arap: 100 # increasing this might help
 w_chamfer: 0000.0
 w_depth: 0000.0
-w_motion: 000.0
-w_smooth_trans: 0.0
-w_smooth_rot: 0.0
-w_smooth_rot_finetune: 2.0 # 1.0
+w_motion: 00.0
+w_smooth_trans: 1.0
+w_smooth_rot: 1.0 # incresing this might help
+w_smooth_rot_finetune: 1.0
 w_smooth_trans_finetune: 1.0
+
 
 #demo data
 src_depth: './demo/moose6OK9_AttackTrotRM/depth/cam1_0015.png'

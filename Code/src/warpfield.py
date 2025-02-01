@@ -434,7 +434,7 @@ class WarpField:
 
         # Assert warpfield and tsdf map to same frame (source frame). Aftet updating warpfield will map to target frame   
         # assert self.frame_id == self.tsdf.frame_id,f"Warpfield maps to:{self.frame_id}th frame but TSDF maps to:{self.tsdf.frame_id}th frame"
-        assert self.frame_id + self.opt.skip_rate == nnrt_data["target_frame_id"],f"Warpfield maps to:{self.frame_id}th frame but TSDF maps to:{frame_id}th frame"
+        assert self.frame_id + self.opt.skip_rate == nnrt_data["target_frame_id"],f"Warpfield maps to:{self.frame_id}th frame but TSDF maps to:{self.frame_id}th frame"
 
         # assert self.rotations.shape[0] == self.deformed_nodes.shape[0],f"Nodes mismatch between transformation data:{self.rotations.shape} and deformed node:{self.deformed_nodes.shape} data"
         # Update deformed_nodes

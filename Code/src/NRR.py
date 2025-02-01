@@ -22,6 +22,8 @@ sys.path.append('lepard')
 from lepard.inference import Lepard	
 from warpfield import WarpField # Connects ED Graph and TSDF/Mesh/Whatever needs to be deformed  
 
+import torch
+torch.set_default_tensor_type(torch.cuda.FloatTensor)
 # from evaluation import CompleteMeshEvaluator
 
 class AnimationTransfer4D:
@@ -139,21 +141,21 @@ class AnimationTransfer4D:
 
 		if self.opt.usePreviousFrame == False: 
 
-			scene_flow,corresp,valid_verts,sceneflow_confidence = self.lepard(self.source_pcd,target_pcd)
+			scene_flow,corresp,valid_verts,sceneflow_confidence = self.lepard(self.source_pcd,target_pcd, self.opt.thr)
 			target_matches = self.source_pcd.copy()
 			target_matches[valid_verts] += scene_flow[valid_verts]
 
-			scene_flow_back,_,valid_verts_back,sceneflow_confidence_back = self.lepard(target_matches,self.source_pcd)
+			scene_flow_back,_,valid_verts_back,sceneflow_confidence_back = self.lepard(target_matches,self.source_pcd, self.opt.thr)
 			returned_points = target_matches.copy()	
 			returned_points[valid_verts_back] += scene_flow_back[valid_verts_back]
 		else: 
 
-			scene_flow,corresp,valid_verts,sceneflow_confidence = self.lepard(self.source_pcd_prev,target_pcd)
+			scene_flow,corresp,valid_verts,sceneflow_confidence = self.lepard(self.source_pcd_prev, target_pcd, self.opt.thr)
 			target_matches = self.source_pcd.copy()
 			target_matches[valid_verts] += self.source_pcd_prev[valid_verts] - self.source_pcd[valid_verts] \
 							+ scene_flow[valid_verts] 
 
-			scene_flow_back,_,valid_verts_back,sceneflow_confidence_back = self.lepard(target_matches,self.source_pcd_prev)
+			scene_flow_back,_,valid_verts_back,sceneflow_confidence_back = self.lepard(target_matches,self.source_pcd_prev, self.opt.thr)
 			returned_points = target_matches.copy()	
 			returned_points[valid_verts_back] += self.source_pcd[valid_verts_back] - self.source_pcd_prev[valid_verts_back] \
 							+ scene_flow_back[valid_verts_back] 
@@ -222,9 +224,9 @@ class AnimationTransfer4D:
 			self.source_pcd_prev,
 			estimated_transformations["warped_verts"],
 			estimated_transformations["valid_verts"],
-			debug=False)	# TODO Debug = interactive visualizer
+			debug=self.opt.debug)
 		# Update previous_sceneflow_lengths
-		# self.previous_sceneflow_lengths = np.linalg.norm(self.source_pcd - estimated_transformations['warped_verts'],axis=1)
+		self.previous_sceneflow_lengths = np.linalg.norm(self.source_pcd - estimated_transformations['warped_verts'],axis=1)
 
 		assert estimated_transformations['warped_verts'].shape == self.source_pcd.shape, f"warped verts:{estimated_transformations['warped_verts'].shape} source shape:{self.source_pcd.shape}"
 
@@ -257,7 +259,7 @@ class AnimationTransfer4D:
 		# estimated_transformations["convergence_info"]["point_to_plane_max"] = [p2pl_max]
 
 		self.save_convergance_info(estimated_transformations["convergence_info"],optical_flow_data["source_id"],optical_flow_data["target_id"])
-		self.vis.show(scene_flow_data,estimated_transformations,debug=False) # plot registration details 
+		self.vis.show(scene_flow_data,estimated_transformations,debug=self.opt.debug) # plot registration details 
 		# self.vis.show(scene_flow_data,estimated_transformations,debug=target_frame == source_frame +1) # plot registration details 
 
 
@@ -364,9 +366,12 @@ if __name__ == "__main__":
 
 
 	# Arguments for debugging  
-	args.add_argument('--debug', default=True, type=bool, help='Whether debbugging or not. True: Logging + Visualization, False: Only Critical information and plots')
+	args.add_argument('--debug', default=False, type=bool, help='Whether debbugging or not. True: Logging + Visualization, False: Only Critical information and plots')
 	args.add_argument('--vis', default='polyscope', type=str, help='Visualizer to plot results')
 
+	# Arguments for parameter tuning
+	args.add_argument('--thr', default=0.1, type=float, help='Threshold for sceneflow')
+	
 	opt = args.parse_args()
 
 

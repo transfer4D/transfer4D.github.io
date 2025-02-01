@@ -1,0 +1,65 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Run NRR",
+        "type": "debugpy",
+        "request": "launch",
+        "program": "NRR.py",
+        "cwd": "${workspaceFolder}/Code/src",
+        "env": {
+          "LD_LIBRARY_PATH": "/usr/lib/x86_64-linux-gnu:/usr/local/lib64:${env:LD_LIBRARY_PATH}",
+          "PYTHONPATH": "${workspaceFolder}/Code/src:${env:PYTHONPATH}"
+        },
+        "args": [
+          "--datadir", "/home/lucy/ssd/Codes/transfer4D/dataset/DonkeyDoll-Test",
+          "--exp", "debug",
+          "--ablation", "debug",
+          "--nrrConfig", "/home/lucy/ssd/Codes/transfer4D/Code/src/NonRigidICP/donkeyDoll.yaml",
+          // "--thr", "0.15", 
+          // "--voxel_size=0.1",
+          // "--finetuning",
+          // "--source_frame", "5",
+        ],
+        "console": "integratedTerminal",
+      },
+      {
+        "name": "Run Curve Skeleton Extraction",
+        "type": "debugpy",
+        "request": "launch",
+        "program": "Code/src/run_pygel.py",
+        "args": [
+          "--datadir", "/home/lucy/ssd/Codes/transfer4D/dataset/DonkeyDoll-Test",
+          "--exp", "debug",
+          "--ablation", "debug",
+          // "--num_points", "8000",
+        ],
+        "console": "integratedTerminal"
+      },
+      {
+        "name": "Run Motion Skeleton Extraction",
+        "type": "debugpy",
+        "request": "launch",
+        "program": "Code/src/detailed_clustering_ssdr.py",
+        "args": [
+          "--datadir", "/home/lucy/ssd/Codes/transfer4D/dataset/DonkeyDoll-Test",
+          "--exp", "debug",
+          "--ablation", "w_smooth_2",
+        ],
+        "console": "integratedTerminal"
+      },
+      {
+        "name": "Run Skeleton Embedding",
+        "type": "debugpy",
+        "request": "launch",
+        "program": "Code/src/pinnochio_runner.py",
+        "args": [
+          "--datadir", "/home/lucy/ssd/Codes/transfer4D/dataset/DonkeyDoll-Test",
+          "--mesh", "/home/lucy/ssd/Codes/transfer4D/dataset/DonkeyDoll-Test/donkey__0000.ply",
+          "--exp", "debug",
+          "--ablation", "w_smooth_2"
+        ],
+        "console": "integratedTerminal"
+      }
+    ]
+  }

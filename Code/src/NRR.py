@@ -133,7 +133,7 @@ class AnimationTransfer4D:
 		"""
 
 
-		target_frame_data = self.frameLoader.get_target_data(target_frame,self.source_frame_data["cropper"])
+		target_frame_data = self.frameLoader.get_target_data(target_frame, self.source_frame_data["cropper"])
 		target_mask = target_frame_data["im"][-1] > 0	
 		target_pcd = target_frame_data["im"][3:,target_mask].T
 
@@ -335,8 +335,6 @@ if __name__ == "__main__":
 	args.add_argument('--use_occlusionFusion', 	  dest='use_occlusionFusion', action="store_true",help='Try to use GPU for faster optimization')
 	args.add_argument('--no-use_occlusionFusion', dest='use_occlusionFusion', action="store_false",help='Uses CPU')
 	args.set_defaults(use_occlusionFusion=False)
-
-
 
 	# Parameters for Sceneflow
 	args.add_argument('--usePreviousFrame', dest='usePreviousFrame', action="store_true",help='Whether to pass previous frame as input to lepard')

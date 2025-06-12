@@ -17,55 +17,106 @@
 
 Note:- For each external requirement, if the folder is already present, replace the files in the original repo with files present in the given folder. 
 
-### Run
-Our method requires 4 steps:  
-```
-// Non Rigid Registration 
-python NRR.py --datadir <path-to-data> --exp <exp-name> --ablation <ablation-name> 
-
-// Curve Skeleton Extraction 
-python run_pygel.py --datadir <path-to-data> --exp <exp-name> --ablation <ablation-name> 
-
-// Motion Skeleton Extraction
-python detailed_clustering_ssdr.py --datadir <path-to-data> --exp <exp-name> --ablation <ablation-name>
-
-// Skeleton Embedding
-python pinnochio_runner.py --datadir <path-to-data>  --mesh <path-to-target-mesh> --exp <exp-name> --ablation <ablation-name> 
-
-```
-
+## Project Setup
 ### Datadir Creation 
 To run on the custom depth videos: Create a folder for the source object in the following format 
 (a) depth: folder containing depth images as 00%d.png; (b) intrinsics.txt: 3x3 camera intrinsic matrix 
 
 
-### NRR Installation: 
-1. Compile lepard and NonRigidICP 
+### Install Lepard: 
 ```
-cd Code/lepard/cpp_wrappers 
-source ./compile_wrappers.sh
+cd src/lepard
+conda env create -f environment.yml
+conda activate lepard
+cd cpp_wrappers; sh compile_wrappers.sh; cd ..
+# Replace codes in lepard with corresponding codes of lepard_transfer4d
+# Download pretrained model and place in pretrained/ from Lepard: https://github.com/rabbityl/lepard
+cd ..
+```
 
-cd Code/NonRigidICP/cxx 
-export MAX_JOBS=1; python setup.py install
+### Install dependencies
+```
+pip install torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 --index-url https://download.pytorch.org/whl/cu118
+pip install --extra-index-url  https://miropsota.github.io/torch_packages_builder pytorch3d==0.7.8+pt2.0.1cu118
+pip install scikit-image plyfile open3d numba pykdtree pynput polyscope trimesh pygel3d==0.5.2  jaxtyping pymeshlab
 ```
 
-### PYSSDR installation
+
+### Install PYSSDR (Dem-Bones)
 ```
+# 1. setup directory
 git clone https://github.com/shubhMaheshwari/pyssdr.git --recursive
 cd pyssdr
 
-# download & place the FBXSDX under ExtLibs/
+# 2. download & place the FBXSDX under ExtLibs/
 
+# 3. add following line at the end of CMakeLists.txt:
+# install(TARGETS pyssdr LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/python3.8/site-packages)
+
+# 4. build
 mkdir build && cd build
 cmake .. -DCMAKE_INSTALL_PREFIX=$(python3 -m site --user-base)
 make install
+cd ../..
 ```
 
-### Pinocchio installation
+### Install NonRigid-ICP
+```
+git clone https://github.com/rabbityl/Nonrigid-ICP-Pytorch
+cd NonRigidICP
+
+# install lietorch
+git clone --recursive https://github.com/princeton-vl/lietorch.git
+cd lietorch
+# optional: specify GPU architectures
+export TORCH_CUDA_ARCH_LIST="7.5;8.6;8.9;9.0"
+pip install --no-build-isolation .
+cd ..
+
+# install pybind11
+pip install pybind11
+
+# install nonrigidICP
+cd cxx
+export MAX_JOBS=1; python setup.py install
+cd ../..
+```
+
+### Install NeuralTracking
+```
+git clone https://github.com/DeformableFriends/NeuralTracking
+cd NeuralTracking/csrc
+export MAX_JOBS=1; python setup.py install
+cd ../..
+```
+
+### Install Pinocchio
 The code of Pinocchio is from [online implementation of Pinnochio](https://github.com/pmolodo/Pinocchio)
 I've updated some of the header codes to be compatible with G++ version 9.5.0, since older version of G++ compiler is not available for Ubuntu 22.04 LTS.
 For those who has lower version of compiler and wants original implementation of Pinocchio, you can pull from the original repo and use it instead.
 ```
 cd Pinocchio
 make
+```
+
+
+## Run
+
+Our method requires 4 steps:  
+1. Non Rigid Registration 
+```
+python NRR.py --datadir <path-to-data> --exp <exp-name> --ablation <ablation-name> 
+```
+2. Curve Skeleton Extraction 
+```
+python run_pygel.py --datadir <path-to-data> --exp <exp-name> --ablation <ablation-name> 
+```
+3. Motion Skeleton Extraction
+```
+python detailed_clustering_ssdr.py --datadir <path-to-data> --exp <exp-name> --ablation <ablation-name>
+```
+4. Skeleton Embedding
+- If you don't have already aligned mesh with camera, you may use option `--align_mesh_orientation`
+```
+python pinnochio_runner.py --datadir <path-to-data>  --mesh <path-to-target-mesh> --exp <exp-name> --ablation <ablation-name> --align_to_depth_map --select_largest_component
 ```

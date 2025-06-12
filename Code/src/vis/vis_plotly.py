@@ -12,8 +12,9 @@ import pandas as pd
 class VisualizerPlotly(Visualizer):
 	def __init__(self,opt):
 		super().__init__(opt)	
-
-		self.nrrAblationFile = '/home/lucy/ssd/Codes/transfer4D/Code/src/evaluationScores/NRR-Ablations.csv'
+  
+		workspace_folder = os.getcwd()
+		self.nrrAblationFile = os.path.join(workspace_folder, "Code/src/evaluationScores/NRR-Ablations.csv")
 		if os.path.isfile(self.nrrAblationFile):
 			self.nrrAblation_pd = pd.read_csv(self.nrrAblationFile)
 
@@ -102,7 +103,9 @@ class VisualizerPlotly(Visualizer):
 
 
 
-				score_filename = f'/home/lucy/ssd/Codes/transfer4D/Code/src/evaluationScores/{exp_name}.csv'
+				workspace_folder = os.getcwd()
+				score_filename = os.path.join(workspace_folder, f"Code/src/evaluationScores/{exp_name}.csv")
+    
 				os.makedirs(os.path.dirname(score_filename),exist_ok=True)
 					
 				if os.path.isfile(score_filename):

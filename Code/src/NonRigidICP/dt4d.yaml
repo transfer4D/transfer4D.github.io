@@ -1,0 +1,22 @@
+iters: 00
+gpu_mode: True
+lr: 0.06
+gamma: 0.999
+deformation_model: ED
+w_silh: 000.0
+w_ldmk: 1
+w_arap: 100 # increasing this might help
+w_chamfer: 0000.0
+w_depth: 0000.0
+w_motion: 00.0
+w_smooth_trans: 0.0
+w_smooth_rot: 0.0 # incresing this might help
+w_smooth_rot_finetune: 0.0
+w_smooth_trans_finetune: 0.0
+
+
+#demo data
+src_depth: './demo/moose6OK9_AttackTrotRM/depth/cam1_0015.png'
+tgt_depth: './demo/moose6OK9_AttackTrotRM/depth/cam1_0009.png'
+intrinsics: "./demo/moose6OK9_AttackTrotRM/cam1intr.txt"
+correspondence: "./demo/moose6OK9_AttackTrotRM/landmark/moose_match_pred.npz"

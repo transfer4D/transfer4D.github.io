@@ -22,9 +22,9 @@ class Lepard:
 	def __init__(self, config_filepath):
 		self.config = load_config(config_filepath)
 		self.pipeline = Pipeline(self.config)
-		print(f"[Warning]: Not loading lepard from:{os.path.join(os.path.dirname(__file__),self.config.pretrain)}")
-		# state = torch.load(os.path.join(os.path.dirname(__file__),self.config.pretrain))
-		# self.pipeline.load_state_dict(state['state_dict'])
+		# print(f"[Warning]: Not loading lepard from:{os.path.join(os.path.dirname(__file__),self.config.pretrain)}")
+		state = torch.load(os.path.join(os.path.dirname(__file__),self.config.pretrain)) #* Load the pretrain model
+		self.pipeline.load_state_dict(state['state_dict'])
 
 		self.pipeline = self.pipeline.to(self.config.device)
 
@@ -156,7 +156,8 @@ class Lepard:
 	def find_scene_flow(self,source_pcd):
 
 		# scene_flow,corresp,mask,confidence_score = blend_anchor_motion(source_pcd,self.query_points,self.sceneflow_points,self.match_confidence_score,knn=3,search_radius=1e-2)
-		scene_flow,corresp,mask,confidence_score = blend_anchor_motion(source_pcd,self.query_points,self.sceneflow_points,self.match_confidence_score,knn=3,search_radius=1e-1)
+		scene_flow,corresp,mask,confidence_score = blend_anchor_motion(
+			source_pcd,self.query_points,self.sceneflow_points,self.match_confidence_score,knn=3,search_radius=1e-1)
 		# scene_flow,corresp,mask,confidence_score = blend_anchor_motion_confidence(source_pcd,self.query_points,self.sceneflow_points,self.match_confidence_score,knn=3,search_radius=1e-1)
 		# self.plot_scene_flow(source_pcd[mask],self.target_points,scene_flow[mask],corresp)
 		return scene_flow,corresp,mask,confidence_score	

@@ -20,7 +20,8 @@ from motion_retargeting import get_mesh_motion
 
 class SkeletonEmbedding: 
 	def __init__(self,opt,vis):
-		self.pinoccio_path = "/home/lucy/ssd/Codes/transfer4D/Code/src/Pinocchio/DemoUI/DemoUI"
+		workspace_folder = os.getcwd()
+		self.pinoccio_path = os.path.join(workspace_folder, "Code/src/Pinocchio/DemoUI/DemoUI")
 
 		self.opt = opt
 		self.vis = vis

@@ -12,10 +12,10 @@
           "PYTHONPATH": "${workspaceFolder}/Code/src:${env:PYTHONPATH}"
         },
         "args": [
-          "--datadir", "${workspaceFolder}/dataset/moose1DOG_WalkforwardRM",
+          "--datadir", "${workspaceFolder}/dataset/DonkeyDoll-Test",
           "--exp", "debug",
           "--ablation", "debug",
-          "--nrrConfig", "${workspaceFolder}/Code/src/NonRigidICP/dt4d.yaml",
+          "--nrrConfig", "${workspaceFolder}/Code/src/NonRigidICP/donkeyDoll.yaml",
           "--thr", "0.005", 
         ],
         "console": "integratedTerminal",
@@ -26,7 +26,7 @@
         "request": "launch",
         "program": "Code/src/run_pygel.py",
         "args": [
-          "--datadir", "${workspaceFolder}/dataset/moose1DOG_WalkforwardRM",
+          "--datadir", "${workspaceFolder}/dataset/DonkeyDoll-Test",
           "--exp", "debug",
           "--ablation", "debug",
           // "--num_points", "8000",
@@ -39,7 +39,7 @@
         "request": "launch",
         "program": "Code/src/detailed_clustering_ssdr.py",
         "args": [
-          "--datadir", "${workspaceFolder}/dataset/moose1DOG_WalkforwardRM",
+          "--datadir", "${workspaceFolder}/dataset/DonkeyDoll-Test",
           "--exp", "debug",
           "--ablation", "debug",
         ],
@@ -51,13 +51,13 @@
         "request": "launch",
         "program": "Code/src/pinnochio_runner.py",
         "args": [
-          "--datadir", "${workspaceFolder}/dataset/moose1DOG_WalkforwardRM",
-          "--mesh", "${workspaceFolder}/dataset/moose1DOG_WalkforwardRM/000.obj",
+          "--datadir", "${workspaceFolder}/dataset/DonkeyDoll-Test",
+          "--mesh", "${workspaceFolder}/dataset/DonkeyDoll-Test/donkey__0000.obj",
           "--exp", "debug",
           "--ablation", "debug",
           "--select_largest_component",
-          // "--align_to_depth_map",
-          "--align_mesh_orientation",
+          "--align_to_depth_map",
+          // "--align_mesh_orientation",
         ],
         "console": "integratedTerminal"
       }
